@@ -223,7 +223,7 @@
                     <div class="flex-1 flex flex-col justify-center items-center my-4">
                         <div id="clickSphere" class="relative w-64 h-64 md:w-[280px] md:h-[280px] rounded-full glass-card flex flex-col justify-center items-center border border-white/15 shadow-inner cursor-pointer duration-200 hover:scale-[1.01]" style="box-shadow: inset 0 8px 32px 0 rgba(255, 255, 255, 0.08);">
                             
-                            <!-- Köşedeki Düzenleme Kalemi (Yeni Apple Tasarımı) -->
+                            <!-- Köşedeki Düzenleme Kalemi -->
                             <button id="editCountBtn" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-xs text-slate-300 scale-tap z-30" title="Değeri Değiştir">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
@@ -343,7 +343,7 @@
                         <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 1. Siri & Kulaklık Entegrasyonu
                     </h4>
                     <p class="pl-3 leading-relaxed opacity-80">
-                        Siri bağlantısını başlattığınızda arka planda 21 kHz frekansında insan kulağının duyamayacağı bir sessiz yayın açılır. Bu sayede iOS işletim sistemi ses kanalını açık tutar.
+                        Siri bağlantısını başlattığınızda sistem arka planda kesintisiz, tamamen sessiz bir dijital ses yayını oynatır. Bu sayede iOS ses kanalını ve Dynamic Island birimini açık tutar.
                     </p>
                     <p class="pl-3 leading-relaxed opacity-80 font-bold text-indigo-300">
                         Siri'ye "Sonraki şarkı" komutu verdiğinizde sayacınız artar, "Önceki şarkı" komutunda azalır. AirPods veya diğer kulaklık tuşları da aynı mantıkla sayacı kontrol eder!
@@ -589,7 +589,7 @@
         </div>
     </div>
 
-    <!-- GÖREV EKLEME MODAL (TAMAMEN KLAVYEDEN EMOJİ DESTEKLİ) -->
+    <!-- GÖREV EKLEME MODAL -->
     <div id="addTaskModal" class="fixed inset-0 bg-[#030208]/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
         <div class="w-full max-w-sm glass-panel p-6 rounded-[35px] border border-white/15 space-y-5">
             
@@ -634,7 +634,7 @@
                     <input type="text" id="customUnitInput" class="w-full p-3.5 rounded-xl glass-input text-slate-100 text-sm font-semibold" placeholder="Örn: Dakika">
                 </div>
 
-                <!-- Klavyeden Özel Görev Emojisi Girişi (İstediğin Apple Tarzı Çözüm) -->
+                <!-- Klavyeden Özel Görev Emojisi Girişi -->
                 <div class="space-y-1.5">
                     <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Görev Emojisi (Klavyeden Ekleyin)</label>
                     <div class="flex gap-3.5 items-center">
@@ -850,6 +850,50 @@
         const congratsTaskText = document.getElementById('congratsTaskText');
         const closeCongrats = document.getElementById('closeCongrats');
 
+        // DİNAMİK 10 SANİYELİK SESSİZ WAV OLUŞTURUCU (iOS Safari MediaSession Kesin Çözüm)
+        function createSilentWavBlob() {
+            const sampleRate = 8000;
+            const numChannels = 1;
+            const bitsPerSample = 16;
+            const duration = 10; // 10 saniyelik uzun sessizlik
+            const numSamples = sampleRate * duration;
+            const blockAlign = numChannels * (bitsPerSample / 8);
+            const byteRate = sampleRate * blockAlign;
+            const subChunk2Size = numSamples * blockAlign;
+            const chunkSize = 36 + subChunk2Size;
+
+            const buffer = new ArrayBuffer(44 + subChunk2Size);
+            const view = new DataView(buffer);
+
+            // "RIFF" chunk
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, chunkSize, true);
+            writeString(view, 8, 'WAVE');
+
+            // "fmt " subchunk
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // PCM format
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, bitsPerSample, true);
+
+            // "data" subchunk
+            writeString(view, 36, 'data');
+            view.setUint32(40, subChunk2Size, true);
+
+            // Ses datası zaten boş (0), sessiz WAV oluşturuldu.
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
         // DOKUNSAL GERİ BİLDİRİM SESLERİ
         function playHapticBeep(freq, type = 'sine', duration = 0.08, volume = 0.1) {
             try {
@@ -1000,7 +1044,7 @@
             }
         }
 
-        // SIRI BAĞLANTI SİSTEMİ
+        // SIRI BAĞLANTI SİSTEMİ (Yeni 10-Saniye WAV Döngüsü ile Kesin Çözüm)
         function toggleSiriConnection() {
             if (!premiumUnlocked) {
                 premiumModal.classList.remove('hidden');
@@ -1014,7 +1058,7 @@
                         audioCtx.resume();
                     }
                     
-                    // 21000 Hz dalgası (Sistem/Kulaklık tetikleyici sinyal)
+                    // 21000 Hz dalgası (Sistem/Kulaklık tetikleyici sub-audible sinyal)
                     siriAudioOscillator = audioCtx.createOscillator();
                     siriAudioGain = audioCtx.createGain();
                     siriAudioOscillator.frequency.value = 21000;
@@ -1025,14 +1069,26 @@
                     siriAudioGain.connect(audioCtx.destination);
                     siriAudioOscillator.start();
 
+                    // 10 Saniyelik gerçek sessiz WAV dosyası oluşturulup Audio nesnesine atanıyor
+                    const silentWavBlob = createSilentWavBlob();
+                    const silentWavUrl = URL.createObjectURL(silentWavBlob);
+                    
                     const silentAudio = document.getElementById('silentAudioLoop');
-                    silentAudio.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==";
-                    silentAudio.play().catch(e => console.log("Otomatik oynatma koruması"));
+                    silentAudio.src = silentWavUrl;
+                    silentAudio.loop = true;
+                    
+                    // Kullanıcı dokunuş anında anında başlatıyoruz (iOS Safari bypass)
+                    silentAudio.play().then(() => {
+                        siriModeActive = true;
+                        configureMediaSessionHandlers();
+                        updateMediaSession();
+                        updateSiriStateUI();
+                        playHapticBeep(920, 'sine', 0.18, 0.12);
+                    }).catch(e => {
+                        console.error("Audio nesnesi başlatılamadı:", e);
+                        showCustomToast("Tarayıcı ses kanalını engelledi. Tekrar deneyin.");
+                    });
 
-                    siriModeActive = true;
-                    configureMediaSessionHandlers();
-                    updateMediaSession();
-                    playHapticBeep(920, 'sine', 0.18, 0.12);
                 } catch(e) {
                     console.error("Siri bağlantı hatası:", e);
                 }
@@ -1045,9 +1101,9 @@
                 const silentAudio = document.getElementById('silentAudioLoop');
                 silentAudio.pause();
                 siriModeActive = false;
+                updateSiriStateUI();
                 playHapticBeep(320, 'sine', 0.18, 0.12);
             }
-            updateSiriStateUI();
         }
 
         function configureMediaSessionHandlers() {
@@ -1166,7 +1222,6 @@
                     progressPercent = Math.min(100, Math.round((progress / task.goal) * 100));
                 }
 
-                // Apple tarzı klavyeden eklenmiş custom emoji gösterimi
                 taskCard.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div class="flex items-center gap-3.5">
@@ -1305,7 +1360,7 @@
                 goal: goal,
                 current: goal,
                 unit: unit,
-                icon: emoji // Klavyeden girilen emojiyi direkt olarak atadık
+                icon: emoji
             };
 
             tasks.push(newTask);
@@ -1536,6 +1591,7 @@
             updateDirectionUI();
             checkAndApplyPremiumUI();
             applyTheme(activeThemeIndex);
+            updateActiveTaskBanner();
         }
     </script>
 </body>
