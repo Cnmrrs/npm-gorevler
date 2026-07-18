@@ -2,12 +2,20 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>NPM Görevler</title>
+    
+    <!-- Apple Web App Meta Tags (Ana Ekran / Masaüstü Entegrasyonu) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NPM Görevler">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/0d0a1b/ffffff?text=NPM">
+    
     <!-- Tailwind CSS ve FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts - Inter ve SF Pro tarzı duruş için -->
+    
+    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -21,6 +29,9 @@
             background: #030208;
             overflow-x: hidden;
             transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Safari standalone durum çubuğu boşluğu */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         /* Apple Tarzı Ultra Akışkan Sıvı Küre Animasyonları */
@@ -340,31 +351,31 @@
             <div class="space-y-4 text-xs text-slate-300">
                 <div class="space-y-1">
                     <h4 class="font-bold text-slate-100 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 1. Siri & Kulaklık Entegrasyonu
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 1. Masaüstü & Safari Web App Kurulumu
                     </h4>
                     <p class="pl-3 leading-relaxed opacity-80">
-                        Siri bağlantısını başlattığınızda sistem arka planda kesintisiz, tamamen sessiz bir dijital ses yayını oynatır. Bu sayede iOS ses kanalını ve Dynamic Island birimini açık tutar.
-                    </p>
-                    <p class="pl-3 leading-relaxed opacity-80 font-bold text-indigo-300">
-                        Siri'ye "Sonraki şarkı" komutu verdiğinizde sayacınız artar, "Önceki şarkı" komutunda azalır. AirPods veya diğer kulaklık tuşları da aynı mantıkla sayacı kontrol eder!
+                        Bu uygulamayı iPhone / iPad ana ekranına eklemek için Safari alt barındaki <i class="fa-solid fa-share-nodes text-indigo-400"></i> Paylaş butonuna basın ve ardından <strong>"Ana Ekrana Ekle"</strong> seçeneğini seçin. Böylece uygulama tam ekranlı, bağımsız bir Apple Web App gibi çalışacaktır.
                     </p>
                 </div>
 
                 <div class="space-y-1">
                     <h4 class="font-bold text-slate-100 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 2. Kilit Ekranı Sayı Gösterimi
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 2. Siri & Kulaklık Kontrolü
+                    </h4>
+                    <p class="pl-3 leading-relaxed opacity-80">
+                        Siri bağlantısını başlattığınızda sistem arka planda kesintisiz, tamamen sessiz bir ses yayını oynatır. Böylece iOS ses kanalını ve Dynamic Island birimini açık tutar.
+                    </p>
+                    <p class="pl-3 leading-relaxed opacity-80 font-bold text-indigo-300">
+                        Siri'ye "Sonraki şarkı" komutu verdiğinizde sayacınız artar/azalır ve her komutta kulaklığınızdan veya telefonunuzdan net bir klik/tık sesi alırsınız.
+                    </p>
+                </div>
+
+                <div class="space-y-1">
+                    <h4 class="font-bold text-slate-100 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 3. Kilit Ekranı Sayı Gösterimi
                     </h4>
                     <p class="pl-3 leading-relaxed opacity-80">
                         Siri entegrasyonu açıkken telefonunuz kilit ekranındayken veya Dinamik Ada üzerindeyken albüm/şarkı adı yerine **anlık olarak sayacınızın değeri (SAYI: X)** gösterilir.
-                    </p>
-                </div>
-
-                <div class="space-y-1">
-                    <h4 class="font-bold text-slate-100 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 3. Günlük Görevler ve Sıfır Sınırı
-                    </h4>
-                    <p class="pl-3 leading-relaxed opacity-80">
-                        Görevler sekmesinde dilediğiniz hedefleri kendiniz klavyeden emoji seçerek ekleyebilirsiniz. Başla butonuna bastığınızda sayaç o göreve odaklanır ve sıfırın altına inmeyerek sayımı tamamlamanızı sağlar.
                     </p>
                 </div>
             </div>
@@ -567,14 +578,14 @@
             </div>
 
             <div class="space-y-3.5 text-xs text-slate-300">
-                <p class="opacity-80">Sol üstteki logoyu istediğiniz emoji ile güncelleyin. İlk 5 logo ücretsizdir, kendi emojinizi klavyeden yazmak Premium yetkisindedir.</p>
+                <p class="opacity-80">Sol üstteki logoyu istediğiniz emoji ile güncelleyin. İlk 5 logo ücretsizdir, kendi emojinizi klavyenizden yazmak Premium yetkisindedir.</p>
                 
                 <div class="grid grid-cols-5 gap-2.5" id="emojiSelectionGroup">
-                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🪄">🪄</button>
-                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🔥">🔥</button>
-                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🚀">🚀</button>
-                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🍀">🍀</button>
-                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="👽">👽</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center scale-tap" data-emoji="🪄">🪄</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center scale-tap" data-emoji="🔥">🔥</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center scale-tap" data-emoji="🚀">🚀</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center scale-tap" data-emoji="🍀">🍀</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center scale-tap" data-emoji="👽">👽</button>
                 </div>
 
                 <div class="space-y-1.5 pt-2">
@@ -884,7 +895,7 @@
             writeString(view, 36, 'data');
             view.setUint32(40, subChunk2Size, true);
 
-            // Ses datası zaten boş (0), sessiz WAV oluşturuldu.
+            // Ses datası boş, sessiz WAV oluşturuldu.
             return new Blob([buffer], { type: 'audio/wav' });
         }
 
@@ -894,7 +905,7 @@
             }
         }
 
-        // DOKUNSAL GERİ BİLDİRİM SESLERİ
+        // DOKUNSAL GERİ BİLDİRİM SESLERİ (TIK SESİ)
         function playHapticBeep(freq, type = 'sine', duration = 0.08, volume = 0.1) {
             try {
                 if (audioCtx.state === 'suspended') {
@@ -917,6 +928,15 @@
             } catch (e) {
                 console.warn("Haptik ses üretilemedi:", e);
             }
+        }
+
+        // Siri komutlarında çalışacak Apple tarzı mekanik tıklama ("tık") sesi
+        function playMechanicalClick() {
+            // Mekanik klik hissi için iki ardışık kısa frekans piki oluşturulur
+            playHapticBeep(1200, 'sine', 0.03, 0.45);
+            setTimeout(() => {
+                playHapticBeep(850, 'sine', 0.02, 0.3);
+            }, 15);
         }
 
         function playSuccessJingle() {
@@ -1077,13 +1097,13 @@
                     silentAudio.src = silentWavUrl;
                     silentAudio.loop = true;
                     
-                    // Kullanıcı dokunuş anında anında başlatıyoruz (iOS Safari bypass)
+                    // Kullanıcı dokunuş anında anında başlatıyoruz (iOS Safari & Standalone Web App bypass)
                     silentAudio.play().then(() => {
                         siriModeActive = true;
                         configureMediaSessionHandlers();
                         updateMediaSession();
                         updateSiriStateUI();
-                        playHapticBeep(920, 'sine', 0.18, 0.12);
+                        playMechanicalClick();
                     }).catch(e => {
                         console.error("Audio nesnesi başlatılamadı:", e);
                         showCustomToast("Tarayıcı ses kanalını engelledi. Tekrar deneyin.");
@@ -1106,16 +1126,20 @@
             }
         }
 
+        // Siri ve Kulaklık Tıklama Tetikleyicileri (Arka Plan ve Masaüstü Web App Desteği)
         function configureMediaSessionHandlers() {
             if ('mediaSession' in navigator) {
-                // Şarkı Geçme Komutları (Arttırma / Azaltma)
+                // Sonraki şarkı komutunda (Artış yönü) -> Hem sayacı değiştir hem de mekanik tık sesi ver!
                 navigator.mediaSession.setActionHandler('nexttrack', () => {
                     handleCounterChange(countDirection);
+                    playMechanicalClick();
                     navigator.mediaSession.playbackState = "playing";
                 });
 
+                // Önceki şarkı komutunda (Azalış yönü) -> Hem sayacı ters yönde değiştir hem de tık sesi ver!
                 navigator.mediaSession.setActionHandler('previoustrack', () => {
                     handleCounterChange(-countDirection);
+                    playMechanicalClick();
                     navigator.mediaSession.playbackState = "playing";
                 });
 
