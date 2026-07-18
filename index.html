@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NPM Görevler</title>
+    <!-- Tailwind CSS ve FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Inter ve SF Pro tarzı duruş için -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            background: #030208;
+            overflow-x: hidden;
+            transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Apple Tarzı Ultra Akışkan Sıvı Küre Animasyonları */
+        @keyframes float-fluid-1 {
+            0%, 100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+            33% { transform: translate(60px, -90px) scale(1.3) rotate(120deg); }
+            66% { transform: translate(-40px, 50px) scale(0.85) rotate(240deg); }
+        }
+        @keyframes float-fluid-2 {
+            0%, 100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+            50% { transform: translate(-80px, 80px) scale(1.25) rotate(-180deg); }
+        }
+        @keyframes float-fluid-3 {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(90px, 40px) scale(1.15); }
+        }
+
+        .liquid-blob-1 {
+            animation: float-fluid-1 22s infinite alternate ease-in-out;
+            filter: blur(110px);
+            transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .liquid-blob-2 {
+            animation: float-fluid-2 26s infinite alternate ease-in-out;
+            filter: blur(110px);
+            transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .liquid-blob-3 {
+            animation: float-fluid-3 18s infinite alternate ease-in-out;
+            filter: blur(120px);
+            transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Apple Tarzı Premium Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+            transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.25);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 35px 0 rgba(255, 255, 255, 0.02);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.04);
+        }
+
+        /* iOS Tarzı Yaylı Slider Geçişi */
+        .tab-content {
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Premium & Neon Parlamalar */
+        .neon-glow-premium {
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.35);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 25px var(--neon-color-1, rgba(139, 92, 246, 0.25));
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Apple Tarzı Dokunsal Geçiş Efektleri */
+        .transition-tactile {
+            transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .scale-tap:active {
+            transform: scale(0.96);
+            transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-100 relative flex items-center justify-center p-0 md:p-6 select-none overflow-hidden transition-tactile">
+
+    <!-- ARKA PLAN DİNAMİK LİQUİD CAM KÜRELERİ -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div id="blob1" class="absolute w-[500px] h-[500px] rounded-full bg-violet-600/25 -top-20 -left-28 liquid-blob-1"></div>
+        <div id="blob2" class="absolute w-[450px] h-[450px] rounded-full bg-pink-500/15 bottom-4 right-0 liquid-blob-2"></div>
+        <div id="blob3" class="absolute w-[360px] h-[360px] rounded-full bg-indigo-500/10 top-1/3 left-1/3 liquid-blob-3"></div>
+    </div>
+
+    <!-- ANA PANEL (NPM GÖREVLER) -->
+    <div id="appContainer" class="w-full h-screen md:h-[880px] md:max-w-md glass-panel md:rounded-[50px] shadow-2xl flex flex-col justify-between overflow-hidden relative z-10 transition-tactile">
+        
+        <!-- ÜST BAR: Bilgiler & Sekmeler -->
+        <header class="p-6 pb-4 border-b border-white/5 flex flex-col gap-5 z-20">
+            <div class="flex justify-between items-center">
+                <!-- Logo & Profil alanı -->
+                <div class="flex items-center gap-3.5">
+                    <button id="logoBtn" class="w-11 h-11 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-0.5 flex items-center justify-center shadow-lg scale-tap">
+                        <div class="w-full h-full bg-[#0d0a1b] rounded-full flex items-center justify-center">
+                            <span id="logoEmoji" class="text-lg">🪄</span>
+                        </div>
+                    </button>
+                    <div>
+                        <h1 class="text-[12px] font-black tracking-widest text-slate-300 uppercase">NPM Görevler</h1>
+                        <div id="siriIndicator" class="flex items-center gap-1.5 mt-0.5 opacity-80">
+                            <span id="siriLed" class="w-1.5 h-1.5 rounded-full bg-slate-500 transition-all duration-300"></span>
+                            <span id="siriStatusText" class="text-[9px] font-bold tracking-wider text-slate-400 uppercase">Siri Pasif</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Üst Sağ Düğmeler -->
+                <div class="flex items-center gap-2">
+                    <!-- Kılavuz -->
+                    <button id="guideBtn" class="w-9 h-9 rounded-full glass-card flex items-center justify-center border border-white/10 scale-tap text-slate-300" title="Kullanım Kılavuzu">
+                        <i class="fa-solid fa-circle-info text-sm"></i>
+                    </button>
+
+                    <!-- Premium Aktivasyon Butonu -->
+                    <button id="premiumBadgeBtn" class="px-3 py-2 rounded-full flex items-center gap-1.5 border scale-tap text-[9px] font-extrabold tracking-wider uppercase border-amber-500/15 bg-amber-500/10 text-amber-400">
+                        <i class="fa-solid fa-crown text-[9px]"></i>
+                        <span id="premiumBadgeText">Ücretsiz</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- iOS TARZI SEKME KONTROLÜ -->
+            <div class="grid grid-cols-2 p-1 rounded-2xl bg-black/40 border border-white/5 relative">
+                <div id="tabIndicator" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-white/10 backdrop-blur-md border border-white/10 rounded-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"></div>
+                <button id="counterTabBtn" class="py-2.5 rounded-xl text-xs font-bold text-slate-100 z-10 transition-colors duration-300">
+                    <i class="fa-solid fa-stopwatch mr-1.5"></i>Sayaç
+                </button>
+                <button id="tasksTabBtn" class="py-2.5 rounded-xl text-xs font-bold text-slate-400 z-10 transition-colors duration-300">
+                    <i class="fa-solid fa-list-check mr-1.5"></i>Görevler <span id="taskCountBadge" class="text-[9px] bg-white/10 text-slate-300 px-2 py-0.5 rounded-full ml-1 font-extrabold">0/3</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ORTA PANEL SÜRÜKLENEBİLİR SLIDER -->
+        <main class="flex-1 relative overflow-hidden">
+            <div id="slidingContainer" class="absolute inset-y-0 left-0 w-[200%] flex tab-content" style="transform: translateX(0%);">
+                
+                <!-- 1. SEKME: ANA SAYAÇ -->
+                <div class="w-1/2 h-full flex flex-col justify-between p-6 overflow-y-auto no-scrollbar">
+                    
+                    <!-- Aktif Görev Bilgilendirme -->
+                    <div id="activeTaskBanner" class="glass-card p-4 rounded-[24px] flex items-center justify-between border border-emerald-500/15 bg-emerald-500/5 hidden">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-lg">
+                                <span id="activeTaskIcon">📖</span>
+                            </div>
+                            <div>
+                                <p id="activeTaskTitle" class="text-xs font-bold text-slate-200 line-clamp-1">Göreviniz Aktif</p>
+                                <p id="activeTaskTarget" class="text-[9px] text-emerald-400 font-extrabold tracking-wider">HEDEF: 50 SAYFA</p>
+                            </div>
+                        </div>
+                        <button id="quitTaskBtn" class="text-[10px] bg-red-500/10 hover:bg-red-500/20 text-red-300 px-3 py-1.5 rounded-xl border border-red-500/15 font-black transition">
+                            KAPAT
+                        </button>
+                    </div>
+
+                    <!-- Sıvı Cam Tıklama Küresi (Asla - Değer Almaz) -->
+                    <div class="flex-1 flex flex-col justify-center items-center my-4">
+                        <div id="clickSphere" class="relative w-64 h-64 md:w-[280px] md:h-[280px] rounded-full glass-card flex flex-col justify-center items-center border border-white/15 shadow-inner cursor-pointer duration-200 hover:scale-[1.01]" style="box-shadow: inset 0 8px 32px 0 rgba(255, 255, 255, 0.08);">
+                            
+                            <!-- Köşedeki Düzenleme Kalemi (Yeni Apple Tasarımı) -->
+                            <button id="editCountBtn" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-xs text-slate-300 scale-tap z-30" title="Değeri Değiştir">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+
+                            <!-- İçi Akıcı Renk Efekti -->
+                            <div class="absolute inset-5 rounded-full bg-gradient-to-br from-indigo-500/10 via-purple-500/15 to-pink-500/10 blur-xl pointer-events-none"></div>
+                            
+                            <!-- Gösterge Bilgisi -->
+                            <span id="counterUnitText" class="text-[10px] font-extrabold tracking-widest text-pink-400 uppercase pointer-events-none z-10">Sayaç Değeri</span>
+                            
+                            <!-- Salt Okunur Sayı Göstergesi -->
+                            <div class="relative z-10 my-1 w-full flex justify-center pointer-events-none">
+                                <span id="counterValueDisplay" class="font-black text-7xl md:text-8xl text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">50</span>
+                            </div>
+                            
+                            <!-- Dokunma İpucu -->
+                            <p class="text-[8px] font-black tracking-widest text-slate-400 uppercase pointer-events-none z-10 mt-3 flex items-center gap-1.5">
+                                <i class="fa-solid fa-hand-pointer animate-pulse text-indigo-400"></i> Dokun ve Say
+                            </p>
+
+                            <!-- Arka Plandaki Akışkan Ripple Konteyneri -->
+                            <div id="rippleContainer" class="absolute inset-0 pointer-events-none overflow-hidden rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Manuel Kontroller (Hassas Değiştirici) -->
+                    <div class="grid grid-cols-3 gap-3.5 mb-2">
+                        <button id="manualMinus" class="glass-card py-3.5 rounded-2xl flex items-center justify-center border border-white/5 text-lg font-bold scale-tap text-slate-300">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <button id="quickDirectionBtn" class="glass-card py-3.5 rounded-2xl flex items-center justify-center gap-1.5 border border-white/5 text-[10px] font-black tracking-wider scale-tap text-slate-300">
+                            <i id="dirIcon" class="fa-solid fa-arrow-down text-pink-400"></i>
+                            <span id="dirText">AZALT</span>
+                        </button>
+                        <button id="manualPlus" class="glass-card py-3.5 rounded-2xl flex items-center justify-center border border-white/5 text-lg font-bold scale-tap text-slate-300">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- 2. SEKME: GÖREVLER (TASKS) -->
+                <div class="w-1/2 h-full flex flex-col justify-between p-6 overflow-y-auto no-scrollbar">
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-sm font-extrabold tracking-wide text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-indigo-400"></i> Günlük Hedefleriniz
+                            </h2>
+                            <button id="openAddTaskBtn" class="w-9 h-9 rounded-full glass-card border border-white/10 flex items-center justify-center text-emerald-400 scale-tap">
+                                <i class="fa-solid fa-plus text-sm"></i>
+                            </button>
+                        </div>
+
+                        <!-- Boş Görev Görünümü -->
+                        <div id="emptyTasksView" class="glass-card p-8 rounded-3xl text-center flex flex-col items-center justify-center gap-3.5 border border-white/5">
+                            <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-slate-500">
+                                <i class="fa-solid fa-folder-open text-base"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-300">Aktif Göreviniz Bulunmuyor</p>
+                                <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">Hemen yeni bir görev oluşturun, hedeflerinizi adım adım geriye düşürün!</p>
+                            </div>
+                        </div>
+
+                        <!-- Dinamik Görevler Listesi -->
+                        <div id="tasksList" class="space-y-3.5 max-h-[480px] overflow-y-auto pr-1 no-scrollbar">
+                            <!-- Javascript ile beslenecek -->
+                        </div>
+                    </div>
+
+                    <!-- Bilgilendirici Alt Cam Kart -->
+                    <div class="glass-card p-3 rounded-2xl border border-white/5 bg-white/1">
+                        <p class="text-[9px] text-slate-400 uppercase font-extrabold tracking-wider text-center leading-relaxed">
+                            <i class="fa-solid fa-info-circle mr-1 text-indigo-400"></i> Bir göreve başlandığında sayaç otomatik o göreve kilitlenir ve 0'ın altına düşmez.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+        <!-- ALT BAR (Sıfırlama, Siri Bağlantısı & Tasarım Seçici) -->
+        <footer class="p-5 border-t border-white/5 flex justify-between items-center z-20">
+            <button id="appResetBtn" class="glass-card w-11 h-11 rounded-2xl flex items-center justify-center border border-white/5 text-slate-400 hover:text-white scale-tap" title="Sayacı Sıfırla">
+                <i class="fa-solid fa-rotate-left"></i>
+            </button>
+
+            <!-- Siri Kısayol Tuşu -->
+            <button id="siriToggleBtn" class="glass-card px-5 py-3 rounded-full flex items-center justify-center gap-2 border border-white/5 text-xs font-extrabold tracking-wider scale-tap text-slate-300">
+                <i class="fa-solid fa-microphone-lines text-pink-400 animate-pulse"></i>
+                <span id="siriBtnText">Siri Bağla</span>
+            </button>
+
+            <!-- Tasarım & Tema Seçici -->
+            <button id="designMenuBtn" class="glass-card w-11 h-11 rounded-2xl flex items-center justify-center border border-white/5 text-slate-400 hover:text-white scale-tap" title="Akışkan Temalar">
+                <i class="fa-solid fa-palette text-indigo-400"></i>
+            </button>
+        </footer>
+
+    </div>
+
+    <!-- KULLANIM KILAVUZU MODAL -->
+    <div id="guideModal" class="fixed inset-0 bg-[#030208]/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm glass-panel p-6 rounded-[35px] border border-white/10 space-y-4 max-h-[90vh] overflow-y-auto no-scrollbar">
+            <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                <h3 class="text-sm font-extrabold tracking-wide flex items-center gap-2">
+                    <i class="fa-solid fa-circle-question text-indigo-400"></i> Kullanım Kılavuzu
+                </h3>
+                <button id="closeGuideBtn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div class="space-y-4 text-xs text-slate-300">
+                <div class="space-y-1">
+                    <h4 class="font-bold text-slate-100 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 1. Siri & Kulaklık Entegrasyonu
+                    </h4>
+                    <p class="pl-3 leading-relaxed opacity-80">
+                        Siri bağlantısını başlattığınızda arka planda 21 kHz frekansında insan kulağının duyamayacağı bir sessiz yayın açılır. Bu sayede iOS işletim sistemi ses kanalını açık tutar.
+                    </p>
+                    <p class="pl-3 leading-relaxed opacity-80 font-bold text-indigo-300">
+                        Siri'ye "Sonraki şarkı" komutu verdiğinizde sayacınız artar, "Önceki şarkı" komutunda azalır. AirPods veya diğer kulaklık tuşları da aynı mantıkla sayacı kontrol eder!
+                    </p>
+                </div>
+
+                <div class="space-y-1">
+                    <h4 class="font-bold text-slate-100 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 2. Kilit Ekranı Sayı Gösterimi
+                    </h4>
+                    <p class="pl-3 leading-relaxed opacity-80">
+                        Siri entegrasyonu açıkken telefonunuz kilit ekranındayken veya Dinamik Ada üzerindeyken albüm/şarkı adı yerine **anlık olarak sayacınızın değeri (SAYI: X)** gösterilir.
+                    </p>
+                </div>
+
+                <div class="space-y-1">
+                    <h4 class="font-bold text-slate-100 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> 3. Günlük Görevler ve Sıfır Sınırı
+                    </h4>
+                    <p class="pl-3 leading-relaxed opacity-80">
+                        Görevler sekmesinde dilediğiniz hedefleri kendiniz klavyeden emoji seçerek ekleyebilirsiniz. Başla butonuna bastığınızda sayaç o göreve odaklanır ve sıfırın altına inmeyerek sayımı tamamlamanızı sağlar.
+                    </p>
+                </div>
+            </div>
+            
+            <button id="guideOkBtn" class="w-full py-3.5 rounded-2xl bg-indigo-600 text-white font-extrabold tracking-wider text-xs uppercase shadow-lg scale-tap">
+                Anladım
+            </button>
+        </div>
+    </div>
+
+    <!-- PREMIUM AKTİVASYON MODAL -->
+    <div id="premiumModal" class="fixed inset-0 bg-[#030208]/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm glass-panel p-6 rounded-[35px] border border-white/15 space-y-5 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-500/20 rounded-full blur-2xl"></div>
+
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-extrabold tracking-wide flex items-center gap-2 text-amber-400">
+                    <i class="fa-solid fa-crown"></i> Premium Özellikleri Aç
+                </h3>
+                <button id="closePremiumBtn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-300">
+                <p class="opacity-80">Premium paketini aktifleştirerek uygulamanın tüm sınırlarını ortadan kaldırın:</p>
+                
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-amber-400 mt-0.5"></i>
+                        <span><strong>Tüm Premium Temalar:</strong> 5 adet benzersiz akışkan cam teması açılır.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-amber-400 mt-0.5"></i>
+                        <span><strong>Siri Bağlantısı:</strong> Uzaktan Siri & Kilit Ekranı sesli kontrolü aktifleşir.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-amber-400 mt-0.5"></i>
+                        <span><strong>Sınırsız Görev Yönetimi:</strong> Görev limiti tamamen ortadan kalkar.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-amber-400 mt-0.5"></i>
+                        <span><strong>Kişiselleştirilmiş Logo Emojisi:</strong> Sol üstteki logoya dilediğiniz her emojiyi klavyenizden atayabilirsiniz.</span>
+                    </li>
+                </ul>
+
+                <div class="space-y-1.5 pt-2">
+                    <label class="text-[10px] font-black uppercase tracking-wider text-amber-400">Aktivasyon Şifresi</label>
+                    <input type="text" id="premiumPassInput" class="w-full p-3 rounded-xl glass-input text-slate-100 text-sm font-bold text-center tracking-widest focus:border-amber-400/50" placeholder="ŞİFRENİZİ GİRİN">
+                    <p id="premiumErrorMsg" class="text-[10px] text-red-400 font-bold hidden text-center mt-1">Geçersiz şifre girdiniz!</p>
+                </div>
+            </div>
+
+            <button id="unlockPremiumBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-black tracking-wider text-xs uppercase shadow-lg scale-tap neon-glow-premium">
+                Şifreyi Doğrula
+            </button>
+        </div>
+    </div>
+
+    <!-- SAYAÇ SAYISINI DÜZENLEME MODAL (KÖŞEDEKİ KALEM İÇİN) -->
+    <div id="editCountModal" class="fixed inset-0 bg-[#030208]/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm glass-panel p-6 rounded-[35px] border border-white/10 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-extrabold tracking-wide flex items-center gap-2">
+                    <i class="fa-solid fa-pen text-indigo-400"></i> Sayaç Değerini Güncelle
+                </h3>
+                <button id="closeEditCountBtn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div class="space-y-1.5">
+                <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Yeni Sayı (Min: 0)</label>
+                <input type="number" min="0" id="modalCountInput" class="w-full p-3.5 rounded-xl glass-input text-slate-100 text-lg font-bold text-center" placeholder="Örn: 50">
+            </div>
+
+            <button id="saveCountValueBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-violet-500 to-pink-500 text-white font-extrabold tracking-wider text-xs uppercase shadow-lg scale-tap">
+                Değeri Kaydet
+            </button>
+        </div>
+    </div>
+
+    <!-- AKIŞKAN TEMALAR MODAL -->
+    <div id="designModal" class="fixed inset-0 bg-[#030208]/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm glass-panel p-6 rounded-[35px] border border-white/10 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-extrabold tracking-wide flex items-center gap-2">
+                    <i class="fa-solid fa-palette text-indigo-400"></i> Akışkan Temalar
+                </h3>
+                <button id="closeDesignBtn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="grid grid-cols-1 gap-2.5 max-h-[380px] overflow-y-auto no-scrollbar pr-1">
+                <div class="text-[9px] font-black tracking-widest text-slate-400 uppercase mt-1 mb-1">Ücretsiz Temalar</div>
+                
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left" data-theme-id="0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-violet-600 to-pink-500"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Aurora Night</p>
+                            <p class="text-[9px] text-slate-400">Klasik Akışkan Mor & Pembe</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm check-icon"></i>
+                </button>
+
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left" data-theme-id="1">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-500 to-teal-600"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Emerald Mint</p>
+                            <p class="text-[9px] text-slate-400">Yumuşak Akışkan Yeşil & Turkuaz</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm hidden check-icon"></i>
+                </button>
+
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left" data-theme-id="2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-500 to-cyan-500"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Ocean Breeze</p>
+                            <p class="text-[9px] text-slate-400">Ferah Akışkan Mavi Tonları</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm hidden check-icon"></i>
+                </button>
+
+                <div class="text-[9px] font-black tracking-widest text-amber-400 uppercase mt-3 mb-1 flex items-center gap-1">
+                    <span>Premium Temalar</span> <i class="fa-solid fa-crown text-[8px]"></i>
+                </div>
+
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left relative" data-theme-id="3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-orange-500 to-amber-500"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Solar Flare</p>
+                            <p class="text-[9px] text-slate-400">Enerjik Turuncu & Altın Sarısı</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-lock text-amber-400 text-xs lock-icon"></i>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm hidden check-icon"></i>
+                </button>
+
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left relative" data-theme-id="4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-lime-500"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Cyber Poison</p>
+                            <p class="text-[9px] text-slate-400">Zehirli Yeşil & Fütüristik Mor</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-lock text-amber-400 text-xs lock-icon"></i>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm hidden check-icon"></i>
+                </button>
+
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left relative" data-theme-id="5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-rose-600 to-orange-500"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Volcanic Ash</p>
+                            <p class="text-[9px] text-slate-400">Sıcak Kırmızı Küre & Gri Arka Plan</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-lock text-amber-400 text-xs lock-icon"></i>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm hidden check-icon"></i>
+                </button>
+
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left relative" data-theme-id="6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-rose-500 to-pink-500"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Candy Pink</p>
+                            <p class="text-[9px] text-slate-400">Yumuşak Akışkan Şeker Pembe</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-lock text-amber-400 text-xs lock-icon"></i>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm hidden check-icon"></i>
+                </button>
+
+                <button class="theme-option-btn glass-card p-3 rounded-2xl flex items-center justify-between border border-white/5 scale-tap text-left relative" data-theme-id="7">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-slate-600 to-slate-800"></div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-100">Deep Space</p>
+                            <p class="text-[9px] text-slate-400">Klasik Minimal Kozmik Siyah</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-lock text-amber-400 text-xs lock-icon"></i>
+                    <i class="fa-solid fa-circle-check text-indigo-400 text-sm hidden check-icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGO ÖZELLEŞTİRME MODAL -->
+    <div id="logoModal" class="fixed inset-0 bg-[#030208]/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm glass-panel p-6 rounded-[35px] border border-white/10 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-extrabold tracking-wide flex items-center gap-2">
+                    <i class="fa-solid fa-signature text-pink-400"></i> Logo Özelleştir
+                </h3>
+                <button id="closeLogoBtn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="space-y-3.5 text-xs text-slate-300">
+                <p class="opacity-80">Sol üstteki logoyu istediğiniz emoji ile güncelleyin. İlk 5 logo ücretsizdir, kendi emojinizi klavyeden yazmak Premium yetkisindedir.</p>
+                
+                <div class="grid grid-cols-5 gap-2.5" id="emojiSelectionGroup">
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🪄">🪄</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🔥">🔥</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🚀">🚀</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="🍀">🍀</button>
+                    <button class="emoji-option-btn p-2 rounded-xl glass-card border border-white/5 text-lg text-center" data-emoji="👽">👽</button>
+                </div>
+
+                <div class="space-y-1.5 pt-2">
+                    <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Kendi Emojinizi Yazın (🔒 Premium)</label>
+                    <input type="text" id="customEmojiInput" maxlength="2" class="w-full p-3.5 rounded-xl glass-input text-slate-100 text-sm font-bold text-center" placeholder="Örn: 🧠">
+                </div>
+            </div>
+
+            <button id="saveLogoBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-violet-500 to-pink-500 text-white font-extrabold tracking-wider text-xs uppercase shadow-lg scale-tap">
+                Logoyu Güncelle
+            </button>
+        </div>
+    </div>
+
+    <!-- GÖREV EKLEME MODAL (TAMAMEN KLAVYEDEN EMOJİ DESTEKLİ) -->
+    <div id="addTaskModal" class="fixed inset-0 bg-[#030208]/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm glass-panel p-6 rounded-[35px] border border-white/15 space-y-5">
+            
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-extrabold tracking-wide flex items-center gap-2">
+                    <i class="fa-solid fa-circle-plus text-emerald-400"></i> Yeni Görev Ekle
+                </h3>
+                <button id="closeAddTaskBtn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Görev Başlığı -->
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Görev Başlığı</label>
+                    <input type="text" id="taskTitleInput" class="w-full p-3.5 rounded-xl glass-input text-slate-100 text-sm font-semibold" placeholder="Örn: Kitap Okuma">
+                </div>
+
+                <!-- Hedef Sayı & Birim Grubu -->
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Hedef Değer</label>
+                        <input type="number" min="1" id="taskGoalInput" class="w-full p-3.5 rounded-xl glass-input text-slate-100 text-sm font-bold text-center" placeholder="Örn: 50">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Ölçü Birimi</label>
+                        <select id="taskUnitSelect" class="w-full p-3.5 rounded-xl glass-input text-slate-100 text-xs font-bold bg-[#0e0c19]">
+                            <option value="Sayfa">Sayfa</option>
+                            <option value="KM">KM</option>
+                            <option value="Adım">Adım</option>
+                            <option value="Metre">Metre</option>
+                            <option value="Kalori">Kalori</option>
+                            <option value="Bardak">Bardak</option>
+                            <option value="Adet">Adet</option>
+                            <option value="Extra">Özel Birim Yaz...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Özel Birim Giriş Alanı -->
+                <div class="space-y-1.5 hidden" id="customUnitWrapper">
+                    <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Özel Birim Adı</label>
+                    <input type="text" id="customUnitInput" class="w-full p-3.5 rounded-xl glass-input text-slate-100 text-sm font-semibold" placeholder="Örn: Dakika">
+                </div>
+
+                <!-- Klavyeden Özel Görev Emojisi Girişi (İstediğin Apple Tarzı Çözüm) -->
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-black uppercase tracking-wider text-slate-400">Görev Emojisi (Klavyeden Ekleyin)</label>
+                    <div class="flex gap-3.5 items-center">
+                        <input type="text" id="taskEmojiInput" maxlength="2" class="w-14 p-3.5 rounded-xl glass-input text-slate-100 text-lg font-bold text-center" value="📖">
+                        <span class="text-[10px] text-slate-400 leading-normal">Klavyenizden dilediğiniz emojiyi buraya girin.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kaydet Butonu -->
+            <button id="saveTaskBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-indigo-500 hover:from-emerald-500 hover:to-indigo-600 text-[#030208] font-black tracking-wider text-xs uppercase shadow-lg scale-tap">
+                Görevi Kaydet
+            </button>
+
+        </div>
+    </div>
+
+    <!-- HEDEF TAMAMLANDI TEBRİK PANELİ -->
+    <div id="congratsPanel" class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm glass-panel p-4 rounded-[24px] border border-yellow-400/35 flex items-center gap-4 shadow-2xl transform scale-0 transition-all duration-300 z-50">
+        <div class="w-12 h-12 rounded-full bg-yellow-400/20 border border-yellow-400/50 flex items-center justify-center text-yellow-300 text-xl animate-pulse">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+        <div class="flex-1">
+            <p class="text-xs font-black text-yellow-300 tracking-wider uppercase">Tebrikler!</p>
+            <p id="congratsTaskText" class="text-xs text-slate-200 mt-0.5">Hedefe başarıyla ulaştınız!</p>
+        </div>
+        <button id="closeCongrats" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- SIRI SESSİZ SES KANALI -->
+    <audio id="silentAudioLoop" loop></audio>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let siriAudioOscillator = null;
+        let siriAudioGain = null;
+        
+        // NPM Görevler Uygulama Hafızası & State
+        let currentTab = 'counter';
+        let premiumUnlocked = localStorage.getItem('npmPremiumUnlocked') === 'true';
+        let tasks = JSON.parse(localStorage.getItem('npmTasks')) || [];
+        let activeTaskId = localStorage.getItem('npmActiveTaskId') || null;
+        let countValue = parseInt(localStorage.getItem('npmCountValue')) || 50;
+        let countDirection = -1; // -1 = Düşür, 1 = Arttır
+        let currentLogoEmoji = localStorage.getItem('npmLogoEmoji') || '🪄';
+        let siriModeActive = false;
+
+        // Apple Tarzı Ultra Akışkan Canlı Temalar
+        const themes = [
+            // 0: Aurora Night (Ücretsiz)
+            { 
+                bg: "radial-gradient(circle at center, #0e0a24 0%, #030208 100%)", 
+                b1: "rgba(139, 92, 246, 0.35)", 
+                b2: "rgba(236, 72, 153, 0.2)", 
+                b3: "rgba(99, 102, 241, 0.15)", 
+                neon: "rgba(139, 92, 246, 0.3)",
+                borderColor: "rgba(255, 255, 255, 0.08)",
+                accentColor: "text-pink-400"
+            },
+            // 1: Emerald Mint (Ücretsiz)
+            { 
+                bg: "radial-gradient(circle at center, #021710 0%, #010806 100%)", 
+                b1: "rgba(16, 185, 129, 0.3)", 
+                b2: "rgba(20, 184, 166, 0.2)", 
+                b3: "rgba(52, 211, 153, 0.1)", 
+                neon: "rgba(16, 185, 129, 0.3)",
+                borderColor: "rgba(52, 211, 153, 0.12)",
+                accentColor: "text-emerald-400"
+            },
+            // 2: Ocean Breeze (Ücretsiz)
+            { 
+                bg: "radial-gradient(circle at center, #020f26 0%, #010510 100%)", 
+                b1: "rgba(59, 130, 246, 0.3)", 
+                b2: "rgba(6, 182, 212, 0.2)", 
+                b3: "rgba(14, 165, 233, 0.15)", 
+                neon: "rgba(59, 130, 246, 0.3)",
+                borderColor: "rgba(6, 182, 212, 0.12)",
+                accentColor: "text-cyan-400"
+            },
+            // 3: Solar Flare (Premium)
+            { 
+                bg: "radial-gradient(circle at center, #240f02 0%, #0a0400 100%)", 
+                b1: "rgba(249, 115, 22, 0.3)", 
+                b2: "rgba(245, 158, 11, 0.2)", 
+                b3: "rgba(239, 68, 68, 0.12)", 
+                neon: "rgba(249, 115, 22, 0.35)",
+                borderColor: "rgba(245, 158, 11, 0.15)",
+                accentColor: "text-amber-400"
+            },
+            // 4: Cyber Poison (Premium)
+            { 
+                bg: "radial-gradient(circle at center, #15031f 0%, #06010a 100%)", 
+                b1: "rgba(168, 85, 247, 0.3)", 
+                b2: "rgba(132, 204, 22, 0.3)", 
+                b3: "rgba(192, 132, 252, 0.15)", 
+                neon: "rgba(168, 85, 247, 0.35)",
+                borderColor: "rgba(132, 204, 22, 0.18)",
+                accentColor: "text-lime-400"
+            },
+            // 5: Volcanic Ash (Premium)
+            { 
+                bg: "radial-gradient(circle at center, #21050a 0%, #0a0103 100%)", 
+                b1: "rgba(225, 29, 72, 0.3)", 
+                b2: "rgba(244, 63, 94, 0.18)", 
+                b3: "rgba(75, 85, 99, 0.25)", 
+                neon: "rgba(225, 29, 72, 0.35)",
+                borderColor: "rgba(225, 29, 72, 0.15)",
+                accentColor: "text-rose-500"
+            },
+            // 6: Candy Pink (Premium)
+            {
+                bg: "radial-gradient(circle at center, #29041b 0%, #0e0108 100%)",
+                b1: "rgba(244, 63, 94, 0.3)",
+                b2: "rgba(219, 39, 119, 0.25)",
+                b3: "rgba(147, 51, 234, 0.15)",
+                neon: "rgba(219, 39, 119, 0.35)",
+                borderColor: "rgba(219, 39, 119, 0.18)",
+                accentColor: "text-rose-400"
+            },
+            // 7: Deep Space (Premium)
+            {
+                bg: "radial-gradient(circle at center, #03030b 0%, #000000 100%)",
+                b1: "rgba(255, 255, 255, 0.12)",
+                b2: "rgba(100, 116, 139, 0.18)",
+                b3: "rgba(15, 23, 42, 0.35)",
+                neon: "rgba(255, 255, 255, 0.15)",
+                borderColor: "rgba(255, 255, 255, 0.06)",
+                accentColor: "text-slate-300"
+            }
+        ];
+        let activeThemeIndex = parseInt(localStorage.getItem('npmActiveThemeIndex')) || 0;
+
+        // ELEMAN SEÇİCİLERİ
+        const slidingContainer = document.getElementById('slidingContainer');
+        const tabIndicator = document.getElementById('tabIndicator');
+        const counterTabBtn = document.getElementById('counterTabBtn');
+        const tasksTabBtn = document.getElementById('tasksTabBtn');
+        const taskCountBadge = document.getElementById('taskCountBadge');
+        
+        const logoEmoji = document.getElementById('logoEmoji');
+        const logoBtn = document.getElementById('logoBtn');
+        const guideBtn = document.getElementById('guideBtn');
+        const premiumBadgeBtn = document.getElementById('premiumBadgeBtn');
+        const premiumBadgeText = document.getElementById('premiumBadgeText');
+        const appContainer = document.getElementById('appContainer');
+
+        const clickSphere = document.getElementById('clickSphere');
+        const counterValueDisplay = document.getElementById('counterValueDisplay');
+        const counterUnitText = document.getElementById('counterUnitText');
+        const rippleContainer = document.getElementById('rippleContainer');
+
+        const manualMinus = document.getElementById('manualMinus');
+        const manualPlus = document.getElementById('manualPlus');
+        const quickDirectionBtn = document.getElementById('quickDirectionBtn');
+        const dirIcon = document.getElementById('dirIcon');
+        const dirText = document.getElementById('dirText');
+
+        // Siri
+        const siriToggleBtn = document.getElementById('siriToggleBtn');
+        const siriBtnText = document.getElementById('siriBtnText');
+        const siriLed = document.getElementById('siriLed');
+        const siriStatusText = document.getElementById('siriStatusText');
+
+        // Modaller
+        const guideModal = document.getElementById('guideModal');
+        const closeGuideBtn = document.getElementById('closeGuideBtn');
+        const guideOkBtn = document.getElementById('guideOkBtn');
+
+        const premiumModal = document.getElementById('premiumModal');
+        const closePremiumBtn = document.getElementById('closePremiumBtn');
+        const premiumPassInput = document.getElementById('premiumPassInput');
+        const premiumErrorMsg = document.getElementById('premiumErrorMsg');
+        const unlockPremiumBtn = document.getElementById('unlockPremiumBtn');
+
+        const designModal = document.getElementById('designModal');
+        const designMenuBtn = document.getElementById('designMenuBtn');
+        const closeDesignBtn = document.getElementById('closeDesignBtn');
+
+        const logoModal = document.getElementById('logoModal');
+        const closeLogoBtn = document.getElementById('closeLogoBtn');
+        const customEmojiInput = document.getElementById('customEmojiInput');
+        const saveLogoBtn = document.getElementById('saveLogoBtn');
+
+        // Köşeden sayı değiştirme
+        const editCountBtn = document.getElementById('editCountBtn');
+        const editCountModal = document.getElementById('editCountModal');
+        const closeEditCountBtn = document.getElementById('closeEditCountBtn');
+        const modalCountInput = document.getElementById('modalCountInput');
+        const saveCountValueBtn = document.getElementById('saveCountValueBtn');
+
+        // Görev Modali elemanları
+        const addTaskModal = document.getElementById('addTaskModal');
+        const openAddTaskBtn = document.getElementById('openAddTaskBtn');
+        const closeAddTaskBtn = document.getElementById('closeAddTaskBtn');
+        const saveTaskBtn = document.getElementById('saveTaskBtn');
+        const taskTitleInput = document.getElementById('taskTitleInput');
+        const taskGoalInput = document.getElementById('taskGoalInput');
+        const taskUnitSelect = document.getElementById('taskUnitSelect');
+        const customUnitWrapper = document.getElementById('customUnitWrapper');
+        const customUnitInput = document.getElementById('customUnitInput');
+        const taskEmojiInput = document.getElementById('taskEmojiInput');
+
+        const tasksList = document.getElementById('tasksList');
+        const emptyTasksView = document.getElementById('emptyTasksView');
+
+        const activeTaskBanner = document.getElementById('activeTaskBanner');
+        const activeTaskTitle = document.getElementById('activeTaskTitle');
+        const activeTaskTarget = document.getElementById('activeTaskTarget');
+        const activeTaskIcon = document.getElementById('activeTaskIcon');
+        const quitTaskBtn = document.getElementById('quitTaskBtn');
+
+        const congratsPanel = document.getElementById('congratsPanel');
+        const congratsTaskText = document.getElementById('congratsTaskText');
+        const closeCongrats = document.getElementById('closeCongrats');
+
+        // DOKUNSAL GERİ BİLDİRİM SESLERİ
+        function playHapticBeep(freq, type = 'sine', duration = 0.08, volume = 0.1) {
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.warn("Haptik ses üretilemedi:", e);
+            }
+        }
+
+        function playSuccessJingle() {
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, index) => {
+                setTimeout(() => {
+                    playHapticBeep(freq, 'sine', 0.22, 0.15);
+                }, index * 100);
+            });
+        }
+
+        // ÖZELLEŞTİRİLMİŞ UYARI PANELİ (Toast)
+        function showCustomToast(message, isSuccess = false) {
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-24 left-1/2 -translate-x-1/2 glass-panel p-4 rounded-2xl flex items-center gap-3 border ${isSuccess ? 'border-emerald-500/35 bg-emerald-500/10' : 'border-red-500/35 bg-red-500/10'} text-xs font-bold text-slate-100 shadow-2xl transition-all duration-300 z-50 transform scale-90 opacity-0`;
+            toast.innerHTML = `
+                <i class="fa-solid ${isSuccess ? 'fa-circle-check text-emerald-400' : 'fa-triangle-exclamation text-red-400'} text-sm"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('scale-90', 'opacity-0');
+                toast.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            setTimeout(() => {
+                toast.classList.remove('scale-100', 'opacity-100');
+                toast.classList.add('scale-90', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // PREMIUM DURUMU KONTROLLERİ
+        function checkAndApplyPremiumUI() {
+            if (premiumUnlocked) {
+                premiumBadgeBtn.className = "px-3 py-2 rounded-full flex items-center gap-1.5 border border-amber-500/40 bg-amber-500/20 text-amber-300 neon-glow-premium scale-tap";
+                premiumBadgeText.innerText = "Premium";
+                
+                document.querySelectorAll('.lock-icon').forEach(icon => {
+                    icon.className = "fa-solid fa-crown text-[9px] text-amber-400";
+                });
+            } else {
+                premiumBadgeBtn.className = "px-3 py-2 rounded-full flex items-center gap-1.5 border border-white/10 bg-white/5 text-slate-400 scale-tap";
+                premiumBadgeText.innerText = "Ücretsiz";
+            }
+            logoEmoji.innerText = currentLogoEmoji;
+            renderTasks();
+        }
+
+        unlockPremiumBtn.addEventListener('click', () => {
+            const code = premiumPassInput.value.trim().toUpperCase();
+            if (code === 'NPM5') {
+                premiumUnlocked = true;
+                localStorage.setItem('npmPremiumUnlocked', 'true');
+                premiumErrorMsg.classList.add('hidden');
+                premiumModal.classList.add('hidden');
+                playSuccessJingle();
+                showCustomToast("Premium Özellikler Aktif Edildi!", true);
+                checkAndApplyPremiumUI();
+            } else {
+                premiumErrorMsg.classList.remove('hidden');
+                playHapticBeep(140, 'sawtooth', 0.25, 0.15);
+            }
+        });
+
+        // TEMA UYGULAMA MOTORU
+        function applyTheme(index) {
+            if (index >= 3 && !premiumUnlocked) {
+                premiumModal.classList.remove('hidden');
+                showCustomToast("Premium temalara erişmek için Premium paketi edinin.");
+                return;
+            }
+
+            activeThemeIndex = index;
+            localStorage.setItem('npmActiveThemeIndex', index);
+            const t = themes[index];
+            
+            document.body.style.background = t.bg;
+            appContainer.style.setProperty('--neon-color-1', t.neon);
+            
+            const b1 = document.getElementById('blob1');
+            const b2 = document.getElementById('blob2');
+            const b3 = document.getElementById('blob3');
+            
+            b1.style.background = t.b1;
+            b2.style.background = t.b2;
+            b3.style.background = t.b3;
+
+            document.querySelectorAll('.glass-panel, .glass-card').forEach(el => {
+                el.style.borderColor = t.borderColor;
+            });
+
+            const unitText = document.getElementById('counterUnitText');
+            if (unitText) {
+                unitText.className = `text-[10px] font-extrabold tracking-widest uppercase pointer-events-none z-10 ${t.accentColor}`;
+            }
+
+            document.querySelectorAll('.theme-option-btn').forEach((btn, i) => {
+                const check = btn.querySelector('.check-icon');
+                if (i === index) {
+                    check.classList.remove('hidden');
+                } else {
+                    check.classList.add('hidden');
+                }
+            });
+
+            playHapticBeep(850, 'sine', 0.06, 0.08);
+        }
+
+        // SIRI & KİLİT EKRANI DEĞER SENKRONİZASYONU
+        function updateMediaSession() {
+            if (!premiumUnlocked) return;
+            if ('mediaSession' in navigator && siriModeActive) {
+                const activeTask = tasks.find(t => t.id === activeTaskId);
+                const currentUnit = activeTask ? activeTask.unit : "Tık";
+                
+                // Medya Adı olarak ekrandaki sayı ayarlanır!
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: `SAYI: ${countValue}`,
+                    artist: `Ölçü Birimi: ${currentUnit}`,
+                    album: activeTask ? activeTask.title : 'NPM Görevler',
+                    artwork: [
+                        { src: 'https://placehold.co/512x512/6366f1/ffffff?text=' + countValue, sizes: '512x512', type: 'image/png' }
+                    ]
+                });
+            }
+        }
+
+        // SIRI BAĞLANTI SİSTEMİ
+        function toggleSiriConnection() {
+            if (!premiumUnlocked) {
+                premiumModal.classList.remove('hidden');
+                showCustomToast("Siri entegrasyonu için Premium paket gerekmektedir.");
+                return;
+            }
+
+            if (!siriModeActive) {
+                try {
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                    
+                    // 21000 Hz dalgası (Sistem/Kulaklık tetikleyici sinyal)
+                    siriAudioOscillator = audioCtx.createOscillator();
+                    siriAudioGain = audioCtx.createGain();
+                    siriAudioOscillator.frequency.value = 21000;
+                    siriAudioOscillator.type = 'sine';
+                    siriAudioGain.gain.setValueAtTime(0.003, audioCtx.currentTime);
+                    
+                    siriAudioOscillator.connect(siriAudioGain);
+                    siriAudioGain.connect(audioCtx.destination);
+                    siriAudioOscillator.start();
+
+                    const silentAudio = document.getElementById('silentAudioLoop');
+                    silentAudio.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==";
+                    silentAudio.play().catch(e => console.log("Otomatik oynatma koruması"));
+
+                    siriModeActive = true;
+                    configureMediaSessionHandlers();
+                    updateMediaSession();
+                    playHapticBeep(920, 'sine', 0.18, 0.12);
+                } catch(e) {
+                    console.error("Siri bağlantı hatası:", e);
+                }
+            } else {
+                if (siriAudioOscillator) {
+                    try { siriAudioOscillator.stop(); } catch(e){}
+                    siriAudioOscillator.disconnect();
+                    siriAudioOscillator = null;
+                }
+                const silentAudio = document.getElementById('silentAudioLoop');
+                silentAudio.pause();
+                siriModeActive = false;
+                playHapticBeep(320, 'sine', 0.18, 0.12);
+            }
+            updateSiriStateUI();
+        }
+
+        function configureMediaSessionHandlers() {
+            if ('mediaSession' in navigator) {
+                // Şarkı Geçme Komutları (Arttırma / Azaltma)
+                navigator.mediaSession.setActionHandler('nexttrack', () => {
+                    handleCounterChange(countDirection);
+                    navigator.mediaSession.playbackState = "playing";
+                });
+
+                navigator.mediaSession.setActionHandler('previoustrack', () => {
+                    handleCounterChange(-countDirection);
+                    navigator.mediaSession.playbackState = "playing";
+                });
+
+                navigator.mediaSession.setActionHandler('play', () => {
+                    document.getElementById('silentAudioLoop').play();
+                    navigator.mediaSession.playbackState = "playing";
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    document.getElementById('silentAudioLoop').pause();
+                    navigator.mediaSession.playbackState = "paused";
+                });
+
+                navigator.mediaSession.playbackState = "playing";
+            }
+        }
+
+        function updateSiriStateUI() {
+            if (siriModeActive) {
+                siriLed.className = "w-1.5 h-1.5 rounded-full bg-emerald-400 neon-glow-emerald";
+                siriStatusText.innerText = "Siri Aktif";
+                siriStatusText.className = "text-[9px] font-bold tracking-wider text-emerald-400 uppercase";
+                siriToggleBtn.className = "glass-card px-5 py-3 rounded-full flex items-center justify-center gap-2 border border-emerald-500/25 scale-tap text-xs font-bold text-emerald-400 bg-emerald-500/10";
+                siriBtnText.innerText = "Siri Bağlantısını Kes";
+            } else {
+                siriLed.className = "w-1.5 h-1.5 rounded-full bg-slate-500";
+                siriStatusText.innerText = "Siri Pasif";
+                siriStatusText.className = "text-[9px] font-semibold tracking-wider text-slate-400 uppercase";
+                siriToggleBtn.className = "glass-card px-5 py-3 rounded-full flex items-center justify-center gap-2 border border-white/5 text-xs font-bold hover:bg-white/10 scale-tap text-slate-300";
+                siriBtnText.innerText = "Siri Bağla";
+            }
+        }
+
+        // ANA SAYAÇ DEĞER YÖNETİMİ (ASLA EKSİYE DÜŞMEZ)
+        function handleCounterChange(diff) {
+            const newVal = countValue + diff;
+            
+            // Sıfırın altına düşmeyi engelleyen katı kural
+            if (newVal < 0) {
+                playHapticBeep(180, 'sawtooth', 0.15, 0.12);
+                showCustomToast("Sayaç değeri 0'ın altına inemez!");
+                return;
+            }
+
+            countValue = newVal;
+            counterValueDisplay.innerText = newVal;
+            localStorage.setItem('npmCountValue', newVal);
+
+            if (diff > 0) {
+                playHapticBeep(640, 'triangle', 0.05, 0.12);
+            } else {
+                playHapticBeep(440, 'triangle', 0.05, 0.12);
+            }
+
+            clickSphere.classList.add('scale-95', 'bg-white/8');
+            setTimeout(() => clickSphere.classList.remove('scale-95', 'bg-white/8'), 80);
+
+            createLiquidRipple();
+            updateMediaSession();
+
+            if (activeTaskId) {
+                updateActiveTaskValue(newVal);
+            }
+        }
+
+        function createLiquidRipple() {
+            const ripple = document.createElement('div');
+            ripple.className = 'absolute rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-out opacity-20';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.left = '50%';
+            ripple.style.top = '50%';
+            ripple.style.backgroundColor = 'rgba(255,255,255,0.45)';
+            ripple.style.boxShadow = '0 0 20px 8px rgba(255, 255, 255, 0.25)';
+            
+            rippleContainer.appendChild(ripple);
+            setTimeout(() => {
+                ripple.style.width = '250%';
+                ripple.style.height = '250%';
+                ripple.style.opacity = '0';
+            }, 15);
+
+            setTimeout(() => ripple.remove(), 550);
+        }
+
+        // GÖREVLERİN LİSTELENMESİ VE SEÇİMİ
+        function renderTasks() {
+            tasksList.innerHTML = "";
+            taskCountBadge.innerText = `${tasks.length}/${premiumUnlocked ? '∞' : '3'}`;
+
+            if (tasks.length === 0) {
+                emptyTasksView.classList.remove('hidden');
+                return;
+            }
+            emptyTasksView.classList.add('hidden');
+
+            tasks.forEach(task => {
+                const isThisActive = (activeTaskId === task.id);
+                const taskCard = document.createElement('div');
+                taskCard.className = `glass-card p-4 rounded-[24px] flex flex-col gap-3 border transition-all duration-300 ${isThisActive ? 'border-indigo-500 bg-indigo-500/5' : 'border-white/5'}`;
+                
+                let progressPercent = 0;
+                if (task.goal > 0) {
+                    const progress = Math.max(0, task.goal - task.current);
+                    progressPercent = Math.min(100, Math.round((progress / task.goal) * 100));
+                }
+
+                // Apple tarzı klavyeden eklenmiş custom emoji gösterimi
+                taskCard.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center text-xl">
+                                <span>${task.icon || '📖'}</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-100">${task.title}</h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">Hedef: ${task.goal} ${task.unit} | Kalan: <span class="font-bold text-indigo-400">${task.current}</span></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="deleteTask('${task.id}')" class="w-8 h-8 rounded-xl bg-red-500/10 border border-red-500/15 text-red-400 flex items-center justify-center scale-tap text-xs">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                            ${isThisActive ? `
+                                <button class="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[9px] font-black tracking-widest uppercase">
+                                    AKTİF
+                                </button>
+                            ` : `
+                                <button onclick="startTask('${task.id}')" class="px-3.5 py-1.5 rounded-xl bg-indigo-500 text-slate-950 text-[9px] font-black tracking-widest uppercase scale-tap">
+                                    BAŞLA
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                    <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full transition-all duration-500" style="width: ${progressPercent}%"></div>
+                    </div>
+                `;
+                tasksList.appendChild(taskCard);
+            });
+        }
+
+        window.startTask = function(id) {
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+
+            activeTaskId = id;
+            localStorage.setItem('npmActiveTaskId', id);
+            
+            countValue = task.current;
+            counterValueDisplay.innerText = countValue;
+            localStorage.setItem('npmCountValue', countValue);
+
+            countDirection = -1;
+            updateDirectionUI();
+
+            playHapticBeep(720, 'sine', 0.12, 0.15);
+            switchTab('counter');
+            updateActiveTaskBanner();
+            renderTasks();
+            updateMediaSession();
+        };
+
+        function quitActiveTask() {
+            activeTaskId = null;
+            localStorage.removeItem('npmActiveTaskId');
+            playHapticBeep(320, 'sine', 0.12, 0.12);
+            updateActiveTaskBanner();
+            renderTasks();
+            updateMediaSession();
+        }
+
+        function updateActiveTaskValue(newVal) {
+            const taskIndex = tasks.findIndex(t => t.id === activeTaskId);
+            if (taskIndex === -1) return;
+
+            // Sıfırın altına inmeyeceğini güvence altına alıyoruz
+            const resolvedValue = Math.max(0, newVal);
+            tasks[taskIndex].current = resolvedValue;
+            localStorage.setItem('npmTasks', JSON.stringify(tasks));
+            
+            updateActiveTaskBanner();
+
+            if (resolvedValue === 0) {
+                triggerTaskSuccess(tasks[taskIndex]);
+            }
+        }
+
+        function triggerTaskSuccess(task) {
+            playSuccessJingle();
+            congratsTaskText.innerText = `"${task.title}" hedefinize başarıyla ulaştınız!`;
+            congratsPanel.classList.remove('scale-0');
+            congratsPanel.classList.add('scale-100');
+            
+            setTimeout(() => {
+                congratsPanel.classList.remove('scale-100');
+                congratsPanel.classList.add('scale-0');
+            }, 6000);
+        }
+
+        window.deleteTask = function(id) {
+            if (activeTaskId === id) {
+                quitActiveTask();
+            }
+            tasks = tasks.filter(t => t.id !== id);
+            localStorage.setItem('npmTasks', JSON.stringify(tasks));
+            playHapticBeep(220, 'sawtooth', 0.1, 0.12);
+            renderTasks();
+        };
+
+        taskUnitSelect.addEventListener('change', () => {
+            if (taskUnitSelect.value === 'Extra') {
+                customUnitWrapper.classList.remove('hidden');
+            } else {
+                customUnitWrapper.classList.add('hidden');
+            }
+        });
+
+        saveTaskBtn.addEventListener('click', () => {
+            if (!premiumUnlocked && tasks.length >= 3) {
+                showCustomToast("Ücretsiz Sürüm Limiti: En Fazla 3 Görev Ekleyebilirsiniz!");
+                premiumModal.classList.remove('hidden');
+                return;
+            }
+
+            const title = taskTitleInput.value.trim();
+            const goal = parseInt(taskGoalInput.value);
+            let unit = taskUnitSelect.value;
+            const emoji = taskEmojiInput.value.trim() || '📖';
+
+            if (unit === 'Extra') {
+                unit = customUnitInput.value.trim() || 'Özel';
+            }
+
+            if (!title || isNaN(goal) || goal <= 0) {
+                playHapticBeep(160, 'sawtooth', 0.2, 0.15);
+                showCustomToast("Lütfen geçerli bir başlık ve hedef değer giriniz!");
+                return;
+            }
+
+            const newTask = {
+                id: 'task_' + Date.now(),
+                title: title,
+                goal: goal,
+                current: goal,
+                unit: unit,
+                icon: emoji // Klavyeden girilen emojiyi direkt olarak atadık
+            };
+
+            tasks.push(newTask);
+            localStorage.setItem('npmTasks', JSON.stringify(tasks));
+            
+            addTaskModal.classList.add('hidden');
+            playHapticBeep(880, 'sine', 0.15, 0.15);
+            renderTasks();
+        });
+
+        function updateActiveTaskBanner() {
+            if (activeTaskId) {
+                const task = tasks.find(t => t.id === activeTaskId);
+                if (task) {
+                    activeTaskTitle.innerText = task.title;
+                    activeTaskTarget.innerText = `HEDEF: ${task.goal} ${task.unit.toUpperCase()} | KALAN: ${task.current}`;
+                    activeTaskIcon.innerText = task.icon || '📖';
+                    counterUnitText.innerText = `Kalan ${task.unit.toUpperCase()}`;
+                    activeTaskBanner.classList.remove('hidden');
+                    return;
+                }
+            }
+            activeTaskBanner.classList.add('hidden');
+            counterUnitText.innerText = "Sayaç Değeri";
+        }
+
+        function switchTab(target) {
+            currentTab = target;
+            if (target === 'counter') {
+                slidingContainer.style.transform = "translateX(0%)";
+                tabIndicator.style.transform = "translateX(0%)";
+                counterTabBtn.classList.add('text-slate-100');
+                counterTabBtn.classList.remove('text-slate-400');
+                tasksTabBtn.classList.add('text-slate-400');
+                tasksTabBtn.classList.remove('text-slate-100');
+            } else {
+                slidingContainer.style.transform = "translateX(-50%)";
+                tabIndicator.style.transform = "translateX(100%)";
+                tasksTabBtn.classList.add('text-slate-100');
+                tasksTabBtn.classList.remove('text-slate-400');
+                counterTabBtn.classList.add('text-slate-400');
+                counterTabBtn.classList.remove('text-slate-100');
+            }
+            playHapticBeep(620, 'sine', 0.06, 0.1);
+        }
+
+        counterTabBtn.addEventListener('click', () => switchTab('counter'));
+        tasksTabBtn.addEventListener('click', () => switchTab('tasks'));
+
+        // TIKLAMA ALANI (DOKUNULDUĞUNDA SAYAÇ DEĞİŞİR)
+        clickSphere.addEventListener('mousedown', (e) => {
+            if (e.target.closest('#editCountBtn')) return;
+            handleCounterChange(countDirection);
+        });
+
+        clickSphere.addEventListener('touchstart', (e) => {
+            if (e.target.closest('#editCountBtn')) return;
+            e.preventDefault();
+            handleCounterChange(countDirection);
+        });
+
+        manualMinus.addEventListener('click', () => handleCounterChange(-1));
+        manualPlus.addEventListener('click', () => handleCounterChange(1));
+
+        quickDirectionBtn.addEventListener('click', () => {
+            countDirection = (countDirection === 1) ? -1 : 1;
+            updateDirectionUI();
+            playHapticBeep(760, 'sine', 0.05, 0.12);
+        });
+
+        function updateDirectionUI() {
+            if (countDirection === 1) {
+                dirIcon.className = "fa-solid fa-arrow-up text-emerald-400";
+                dirText.innerText = "ARTTIR";
+            } else {
+                dirIcon.className = "fa-solid fa-arrow-down text-pink-400";
+                dirText.innerText = "AZALT";
+            }
+        }
+
+        // KÖŞEDEN SAYI DEĞİŞTİRME MEKANİZMASI (ÖZEL KALEM TUŞU)
+        editCountBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            modalCountInput.value = countValue;
+            editCountModal.classList.remove('hidden');
+            playHapticBeep(520, 'sine', 0.05, 0.1);
+        });
+
+        closeEditCountBtn.addEventListener('click', () => {
+            editCountModal.classList.add('hidden');
+        });
+
+        saveCountValueBtn.addEventListener('click', () => {
+            let userVal = parseInt(modalCountInput.value);
+            if (!isNaN(userVal)) {
+                if (userVal < 0) {
+                    playHapticBeep(180, 'sawtooth', 0.15, 0.12);
+                    showCustomToast("Lütfen 0 veya daha büyük bir sayı giriniz!");
+                    return;
+                }
+                countValue = userVal;
+                counterValueDisplay.innerText = userVal;
+                localStorage.setItem('npmCountValue', userVal);
+                if (activeTaskId) {
+                    updateActiveTaskValue(userVal);
+                }
+                updateMediaSession();
+                playHapticBeep(820, 'sine', 0.06, 0.12);
+            }
+            editCountModal.classList.add('hidden');
+        });
+
+        // SIFIRLAMA MOTORU (0'IN ALTINA İNMEZ)
+        document.getElementById('appResetBtn').addEventListener('click', () => {
+            if (activeTaskId) {
+                const task = tasks.find(t => t.id === activeTaskId);
+                if (task) {
+                    countValue = task.goal;
+                    counterValueDisplay.innerText = countValue;
+                    updateActiveTaskValue(countValue);
+                    playHapticBeep(220, 'sawtooth', 0.15, 0.12);
+                    return;
+                }
+            }
+            countValue = 50;
+            counterValueDisplay.innerText = 50;
+            localStorage.setItem('npmCountValue', 50);
+            playHapticBeep(220, 'sawtooth', 0.15, 0.12);
+            updateMediaSession();
+        });
+
+        siriToggleBtn.addEventListener('click', toggleSiriConnection);
+        quitTaskBtn.addEventListener('click', quitActiveTask);
+        closeCongrats.addEventListener('click', () => congratsPanel.classList.add('scale-0'));
+
+        // Kılavuz
+        guideBtn.addEventListener('click', () => guideModal.classList.remove('hidden'));
+        closeGuideBtn.addEventListener('click', () => guideModal.classList.add('hidden'));
+        guideOkBtn.addEventListener('click', () => guideModal.classList.add('hidden'));
+
+        // Premium modalı
+        premiumBadgeBtn.addEventListener('click', () => {
+            if (!premiumUnlocked) {
+                premiumModal.classList.remove('hidden');
+            } else {
+                showCustomToast("Premium sürüm zaten aktif!", true);
+            }
+        });
+        closePremiumBtn.addEventListener('click', () => premiumModal.classList.add('hidden'));
+
+        // Tema seçici modalı
+        designMenuBtn.addEventListener('click', () => designModal.classList.remove('hidden'));
+        closeDesignBtn.addEventListener('click', () => designModal.classList.add('hidden'));
+
+        document.querySelectorAll('.theme-option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const themeId = parseInt(btn.getAttribute('data-theme-id'));
+                applyTheme(themeId);
+            });
+        });
+
+        // Logo modalı
+        logoBtn.addEventListener('click', () => {
+            logoModal.classList.remove('hidden');
+        });
+        closeLogoBtn.addEventListener('click', () => logoModal.classList.add('hidden'));
+
+        document.querySelectorAll('.emoji-option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const emoji = btn.getAttribute('data-emoji');
+                customEmojiInput.value = emoji;
+                playHapticBeep(670, 'sine', 0.03, 0.08);
+            });
+        });
+
+        customEmojiInput.addEventListener('input', () => {
+            if (!premiumUnlocked) {
+                customEmojiInput.value = "";
+                premiumModal.classList.remove('hidden');
+                showCustomToast("Kendi emojinizi özgürce yazmak için Premium pakete sahip olmalısınız!");
+            }
+        });
+
+        saveLogoBtn.addEventListener('click', () => {
+            const chosenEmoji = customEmojiInput.value.trim();
+            if (chosenEmoji) {
+                currentLogoEmoji = chosenEmoji;
+                localStorage.setItem('npmLogoEmoji', chosenEmoji);
+                logoEmoji.innerText = chosenEmoji;
+                logoModal.classList.add('hidden');
+                showCustomToast("Logo başarıyla güncellendi!", true);
+            }
+        });
+
+        // Görev Ekleme İkon Seçimleri
+        openAddTaskBtn.addEventListener('click', () => {
+            addTaskModal.classList.remove('hidden');
+            taskTitleInput.value = "";
+            taskGoalInput.value = "";
+            customUnitInput.value = "";
+            customUnitWrapper.classList.add('hidden');
+            taskUnitSelect.value = "Sayfa";
+            taskEmojiInput.value = "📖";
+            playHapticBeep(520, 'sine', 0.05, 0.1);
+        });
+        closeAddTaskBtn.addEventListener('click', () => addTaskModal.classList.add('hidden'));
+
+        // Klavye Kısayolları
+        document.addEventListener('keydown', (e) => {
+            const act = document.activeElement;
+            if (act === taskTitleInput || act === taskGoalInput || act === premiumPassInput || act === customEmojiInput || act === modalCountInput || act === taskEmojiInput) return;
+
+            if (e.code === "Space" || e.code === "Enter") {
+                e.preventDefault();
+                handleCounterChange(countDirection);
+            } else if (e.code === "ArrowUp") {
+                e.preventDefault();
+                handleCounterChange(1);
+            } else if (e.code === "ArrowDown") {
+                e.preventDefault();
+                handleCounterChange(-1);
+            }
+        });
+
+        // BAŞLANGIÇ AYARLARI
+        window.onload = function() {
+            counterValueDisplay.innerText = countValue;
+            updateDirectionUI();
+            checkAndApplyPremiumUI();
+            applyTheme(activeThemeIndex);
+        }
+    </script>
+</body>
+</html>
